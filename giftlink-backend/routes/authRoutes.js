@@ -10,9 +10,6 @@ const dotenv = require('dotenv');
 const pino = require('pino');  // Import Pino logger
 //Step 1 - Task 3: Create a Pino logger instance
 const logger = pino();  // Create a Pino logger instance
-// Task 1: Use the `body`,`validationResult` from `express-validator` for input validation
-const { body, validationResult } = require('express-validator');
-
 dotenv.config();
 
 //Step 1 - Task 4: Create JWT secret
@@ -114,6 +111,7 @@ router.put('/update', async (req, res) => {
         // Task 5: find user credentials in database
         const existingUser = await collection.findOne({ email });
         existingUser.updatedAt = new Date();
+        existingUser.firstName = req.body.name;
         // Task 6: update user credentials in database
         const updatedUser = await collection.findOneAndUpdate(
             { email },
